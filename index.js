@@ -5,10 +5,11 @@ const path = require('path');
 function formatFile(filePath, formatFunc) {
   return new Promise((resolve, reject) => {
     if (typeof formatFunc !== 'function') reject(new Error('invalid format function.'));
-    fs.copyFile(filePath, filePath + '.temp', () => {
+    const tempFilePath = filePath + '.temp';
+    fs.copyFile(filePath, tempFilePath, () => {
       fs.writeFileSync(filePath, '');
       const rl = readline.createInterface({
-        input: fs.createReadStream(filePath + '.temp'),
+        input: fs.createReadStream(tempFilePath),
         crlfDelay: Infinity
       });
       
@@ -18,7 +19,7 @@ function formatFile(filePath, formatFunc) {
       
       rl.on('close', () => {
         rl.close();
-        fs.rmSync(filePath + '.temp', {force: true})
+        fs.rmSync(tempFilePath, {force: true})
         resolve(filePath);
       });
     })
@@ -37,6 +38,7 @@ function handleAllFiles(dirPath, formatFunc) {
           handleAllFiles(newPath, formatFunc);
         }
       }
+      resolve();
     });
   });
 }
