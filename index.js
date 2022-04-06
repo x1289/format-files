@@ -41,10 +41,7 @@ function handleAllFiles(dirPath, formatFunc) {
   });
 }
 
-const x = async () => {
-  await handleAllFiles('./testing/', (str) => {
-    return str.trimRight() + '\n';
-  });
+module.exports = {
+  handleAllFiles,
+  formatFile
 }
-
-x();

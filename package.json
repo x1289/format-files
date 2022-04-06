@@ -1,5 +1,5 @@
 {
-  "name": "format-files",
+  "name": "@x1289/format-files",
   "version": "1.0.0",
   "description": "Small script to format all files in a directory",
   "main": "index.js",
